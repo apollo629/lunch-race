@@ -1,0 +1,179 @@
+<script setup>
+import { useAppState } from '../composables/useAppState'
+import LunchSpotInput from './LunchSpotInput.vue'
+import { VALIDATION_RULES } from '../constants/raceConfig'
+
+const { lunchSpots, removeSpot, canStartRace, startRace } = useAppState()
+</script>
+
+<template>
+  <div class="setup-view fade-in">
+    <div class="setup-container">
+      <div class="setup-header">
+        <h2>Add Lunch Spots</h2>
+        <p class="subtitle">
+          Add at least {{ VALIDATION_RULES.MIN_SPOTS }} lunch spots to start the
+          race!
+        </p>
+      </div>
+
+      <LunchSpotInput />
+
+      <div v-if="lunchSpots.length > 0" class="lunch-spots-list">
+        <h3>Racers ({{ lunchSpots.length }})</h3>
+        <ul>
+          <li
+            v-for="(spot, index) in lunchSpots"
+            :key="spot.id"
+            class="lunch-spot-item slide-in"
+          >
+            <span class="spot-number">{{ index + 1 }}</span>
+            <span class="spot-name">{{ spot.name }}</span>
+            <button class="danger" @click="removeSpot(spot.id)">Remove</button>
+          </li>
+        </ul>
+      </div>
+
+      <div v-else class="empty-state">
+        <p>No lunch spots added yet. Start by adding some locations above!</p>
+      </div>
+
+      <div class="setup-actions">
+        <button
+          :disabled="!canStartRace"
+          class="start-button"
+          @click="startRace"
+        >
+          {{ canStartRace ? 'Start Race!' : 'Add More Spots to Start' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+.setup-view {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-md);
+}
+
+.setup-container {
+  background: var(--color-surface);
+  border-radius: 16px;
+  padding: var(--space-xl);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  width: 100%;
+}
+
+.setup-header {
+  margin-bottom: var(--space-xl);
+  text-align: center;
+}
+
+.setup-header h2 {
+  font-size: 2rem;
+  margin-bottom: var(--space-sm);
+  color: var(--color-text);
+}
+
+.subtitle {
+  color: var(--color-text-light);
+  font-size: 1rem;
+}
+
+.lunch-spots-list {
+  margin-top: var(--space-xl);
+}
+
+.lunch-spots-list h3 {
+  margin-bottom: var(--space-md);
+  color: var(--color-text);
+  font-size: 1.25rem;
+}
+
+.lunch-spots-list ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.lunch-spot-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  background: var(--color-bg);
+  border-radius: 8px;
+  transition: transform var(--transition-fast);
+}
+
+.lunch-spot-item:hover {
+  transform: translateX(4px);
+}
+
+.spot-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: var(--color-primary);
+  color: white;
+  border-radius: 50%;
+  font-weight: 600;
+  font-size: 0.875rem;
+  flex-shrink: 0;
+}
+
+.spot-name {
+  flex: 1;
+  font-weight: 500;
+  color: var(--color-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lunch-spot-item button {
+  flex-shrink: 0;
+  padding: var(--space-xs) var(--space-md);
+  font-size: 0.875rem;
+}
+
+.empty-state {
+  margin-top: var(--space-xl);
+  padding: var(--space-xl);
+  text-align: center;
+  color: var(--color-text-light);
+  background: var(--color-bg);
+  border-radius: 8px;
+  border: 2px dashed var(--color-border);
+}
+
+.setup-actions {
+  margin-top: var(--space-xl);
+  display: flex;
+  justify-content: center;
+}
+
+.start-button {
+  padding: var(--space-md) var(--space-2xl);
+  font-size: 1.125rem;
+  min-width: 200px;
+}
+
+@media (max-width: 768px) {
+  .setup-container {
+    padding: var(--space-lg);
+  }
+
+  .setup-header h2 {
+    font-size: 1.5rem;
+  }
+}
+</style>

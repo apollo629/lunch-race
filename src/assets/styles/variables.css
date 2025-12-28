@@ -1,0 +1,39 @@
+:root {
+  /* Colors */
+  --color-primary: #4F46E5;
+  --color-success: #10B981;
+  --color-danger: #EF4444;
+  --color-bg: #F9FAFB;
+  --color-surface: #FFFFFF;
+  --color-text: #1F2937;
+  --color-text-light: #6B7280;
+  --color-border: #E5E7EB;
+
+  /* Horse colors */
+  --horse-red: #EF4444;
+  --horse-blue: #3B82F6;
+  --horse-green: #10B981;
+  --horse-yellow: #F59E0B;
+  --horse-purple: #8B5CF6;
+  --horse-pink: #EC4899;
+  --horse-orange: #F97316;
+  --horse-teal: #14B8A6;
+
+  /* Spacing */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+
+  /* Layout */
+  --container-max-width: 1200px;
+  --lane-height: 80px;
+  --finish-line-width: 4px;
+
+  /* Animation */
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow: 400ms ease;
+}
