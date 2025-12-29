@@ -128,4 +128,64 @@ const transform = computed(() => {
     margin-top: -20px;
   }
 }
+
+/* Phones - compact layout */
+@media (max-width: 480px) {
+  .lane-container {
+    height: 50px;
+    gap: var(--space-sm);
+  }
+
+  .lane-label {
+    width: 70px;
+  }
+
+  .label-text {
+    font-size: 0.7rem;
+    line-height: 1.2;
+  }
+
+  .lane-track {
+    height: 40px;
+  }
+
+  .horse {
+    width: 28px;
+    height: 28px;
+    margin-top: -14px;
+    border-radius: 6px;
+  }
+
+  .horse::after {
+    left: -10px;
+    width: 10px;
+  }
+}
+
+/* Extra small phones - minimal layout */
+@media (max-width: 374px) {
+  .lane-container {
+    height: 45px;
+  }
+
+  .lane-label {
+    width: 60px;
+  }
+
+  .lane-track {
+    height: 35px;
+  }
+
+  .horse {
+    width: 24px;
+    height: 24px;
+    margin-top: -12px;
+    border-radius: 4px;
+  }
+
+  .horse::after {
+    left: -8px;
+    width: 8px;
+  }
+}
 </style>

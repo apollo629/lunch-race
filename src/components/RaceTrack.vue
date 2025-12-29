@@ -29,8 +29,20 @@ onMounted(() => {
   if (trackContainerRef.value) {
     const container = trackContainerRef.value
     const containerWidth = container.offsetWidth
-    // Account for padding on both sides (var(--space-xl) = 2rem = 32px per side)
-    const paddingTotal = 64
+
+    // Calculate padding based on screen size
+    const screenWidth = window.innerWidth
+    let paddingTotal
+    if (screenWidth <= 374) {
+      paddingTotal = 12 // 6px per side for extra small phones
+    } else if (screenWidth <= 480) {
+      paddingTotal = 16 // 8px per side (var(--space-sm))
+    } else if (screenWidth <= 768) {
+      paddingTotal = 32 // 16px per side (var(--space-md))
+    } else {
+      paddingTotal = 64 // 32px per side (var(--space-xl))
+    }
+
     raceAreaWidth.value = containerWidth - paddingTotal
   }
 
@@ -165,6 +177,70 @@ onMounted(() => {
     /* left is set dynamically via :style */
     top: var(--space-md);
     bottom: var(--space-md);
+  }
+}
+
+/* Phones - minimal padding */
+@media (max-width: 480px) {
+  .race-track {
+    padding: var(--space-sm);
+  }
+
+  .race-header {
+    margin-bottom: var(--space-lg);
+  }
+
+  .race-header h2 {
+    font-size: 1.25rem;
+    margin-bottom: var(--space-xs);
+  }
+
+  .race-header p {
+    font-size: 0.875rem;
+  }
+
+  .track-container {
+    padding: var(--space-sm);
+    border-radius: 12px;
+  }
+
+  .finish-line {
+    top: var(--space-sm);
+    bottom: var(--space-sm);
+    width: 10px;
+  }
+
+  .finish-line::before {
+    font-size: 0.7rem;
+    padding: 2px 4px;
+    top: -28px;
+  }
+
+  .lanes {
+    gap: var(--space-sm);
+  }
+}
+
+/* Extra small phones - absolute minimum padding */
+@media (max-width: 374px) {
+  .race-track {
+    padding: 6px;
+  }
+
+  .track-container {
+    padding: 6px;
+    border-radius: 8px;
+  }
+
+  .finish-line {
+    top: 6px;
+    bottom: 6px;
+  }
+
+  .finish-line::before {
+    content: '🏁';
+    font-size: 1rem;
+    padding: 2px;
   }
 }
 </style>
