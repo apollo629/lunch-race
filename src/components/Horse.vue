@@ -155,18 +155,24 @@ const transform = computed(() => {
   font-size: 32px;
   z-index: 2;
   filter: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.3));
+  animation: gallop 0.3s steps(4) infinite;
 }
 
 .horse-container::after {
   content: '';
   position: absolute;
   left: -15px;
-  top: 0;
-  width: 15px;
-  height: 100%;
-  background: linear-gradient(to right, transparent, rgba(139, 92, 46, 0.3));
-  opacity: 0.5;
-  border-radius: 4px 0 0 4px;
+  top: 50%;
+  width: 20px;
+  height: 30px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(139, 92, 46, 0.4) 0%,
+    rgba(139, 92, 46, 0.2) 50%,
+    transparent 100%
+  );
+  transform: translateY(-50%);
+  animation: dust-cloud 0.4s ease-out infinite;
   z-index: 0;
 }
 

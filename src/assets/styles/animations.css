@@ -85,6 +85,32 @@
   }
 }
 
+@keyframes gallop {
+  0%, 100% {
+    transform: translateY(0) scaleY(1);
+  }
+  25% {
+    transform: translateY(-2px) scaleY(0.95);
+  }
+  50% {
+    transform: translateY(0) scaleY(1.05);
+  }
+  75% {
+    transform: translateY(-1px) scaleY(0.98);
+  }
+}
+
+@keyframes dust-cloud {
+  0% {
+    opacity: 0.6;
+    transform: translateY(-50%) translateX(0) scale(0.5);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-50%) translateX(-20px) scale(1.5);
+  }
+}
+
 .fade-in {
   animation: fadeIn var(--transition-normal);
 }
