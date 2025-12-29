@@ -217,6 +217,95 @@ const formatRaceTime = (milliseconds) => {
 
   .result-actions button {
     max-width: none;
+    min-height: 44px;
+  }
+}
+
+/* Phones - compact fonts and full width */
+@media (max-width: 480px) {
+  .result-view {
+    padding: var(--space-sm);
+  }
+
+  .result-container {
+    padding: var(--space-md);
+    border-radius: 12px;
+    max-width: 100%;
+  }
+
+  .winner-announcement {
+    padding: var(--space-md);
+    margin-bottom: var(--space-lg);
+  }
+
+  .winner-announcement h1 {
+    font-size: 1.125rem;
+    margin-bottom: var(--space-sm);
+  }
+
+  .winner-name {
+    font-size: 1.75rem;
+    line-height: 1.1;
+  }
+
+  .winner-subtitle {
+    font-size: 0.875rem;
+  }
+
+  .standings {
+    margin-bottom: var(--space-lg);
+  }
+
+  .standings h2 {
+    font-size: 1.125rem;
+  }
+
+  .standing-item {
+    padding: var(--space-sm) var(--space-md);
+    gap: var(--space-sm);
+  }
+
+  .spot-indicator {
+    width: 20px;
+    height: 20px;
+  }
+
+  .race-time {
+    font-size: 0.75rem;
+  }
+
+  .result-actions {
+    gap: var(--space-sm);
+  }
+}
+
+/* Extra small phones */
+@media (max-width: 374px) {
+  .result-container {
+    padding: var(--space-sm);
+  }
+
+  .winner-announcement {
+    padding: var(--space-sm);
+  }
+
+  .winner-name {
+    font-size: 1.5rem;
+  }
+
+  .winner-announcement h1 {
+    font-size: 1rem;
+  }
+
+  .position {
+    width: 28px;
+    height: 28px;
+    font-size: 0.75rem;
+  }
+
+  .spot-indicator {
+    width: 18px;
+    height: 18px;
   }
 }
 </style>

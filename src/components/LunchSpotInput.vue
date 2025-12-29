@@ -66,4 +66,37 @@ const handleInput = () => {
 .input-group button {
   flex-shrink: 0;
 }
+
+/* Tablets and above - larger touch targets */
+@media (max-width: 768px) {
+  .input-group button {
+    min-height: 44px;
+    padding: var(--space-sm) var(--space-lg);
+  }
+
+  .input-group input {
+    min-height: 44px;
+  }
+}
+
+/* Phones - vertical layout for easier typing */
+@media (max-width: 480px) {
+  .lunch-spot-input {
+    max-width: 100%;
+  }
+
+  .input-group {
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .input-group input {
+    width: 100%;
+  }
+
+  .input-group button {
+    width: 100%;
+    min-height: 44px;
+  }
+}
 </style>

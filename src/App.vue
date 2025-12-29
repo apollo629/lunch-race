@@ -56,4 +56,15 @@ main {
     font-size: 1.5rem;
   }
 }
+
+/* Phones - compact header */
+@media (max-width: 480px) {
+  header {
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  header h1 {
+    font-size: 1.25rem;
+  }
+}
 </style>

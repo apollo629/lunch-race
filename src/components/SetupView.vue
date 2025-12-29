@@ -175,5 +175,71 @@ const { lunchSpots, removeSpot, canStartRace, startRace } = useAppState()
   .setup-header h2 {
     font-size: 1.5rem;
   }
+
+  .lunch-spot-item button {
+    padding: var(--space-sm) var(--space-lg);
+    min-height: 44px;
+    font-size: 1rem;
+  }
+}
+
+/* Phones - full width and larger touch targets */
+@media (max-width: 480px) {
+  .setup-view {
+    padding: var(--space-sm);
+  }
+
+  .setup-container {
+    padding: var(--space-md);
+    border-radius: 12px;
+    max-width: 100%;
+  }
+
+  .setup-header {
+    margin-bottom: var(--space-lg);
+  }
+
+  .setup-header h2 {
+    font-size: 1.25rem;
+  }
+
+  .subtitle {
+    font-size: 0.875rem;
+  }
+
+  .lunch-spots-list h3 {
+    font-size: 1.125rem;
+  }
+
+  .lunch-spot-item {
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  .lunch-spot-item button {
+    padding: var(--space-sm) var(--space-md);
+    min-height: 44px;
+  }
+
+  .start-button {
+    width: 100%;
+    min-width: auto;
+  }
+}
+
+/* Extra small phones */
+@media (max-width: 374px) {
+  .setup-container {
+    padding: var(--space-sm);
+  }
+
+  .setup-header h2 {
+    font-size: 1.125rem;
+  }
+
+  .spot-number {
+    width: 28px;
+    height: 28px;
+    font-size: 0.75rem;
+  }
 }
 </style>
