@@ -116,8 +116,8 @@ onMounted(() => {
 .finish-line {
   position: absolute;
   /* left is set dynamically via :style */
-  top: var(--space-xl);
-  bottom: var(--space-xl);
+  top: 50%;
+  height: calc(100% - var(--space-xl) * 2);
   width: 12px;
   background: repeating-linear-gradient(
     0deg,
@@ -128,8 +128,11 @@ onMounted(() => {
   );
   border-radius: 4px;
   z-index: 10;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-  transform: translateX(-6px);
+  box-shadow:
+    0 0 20px rgba(0, 0, 0, 0.3),
+    0 0 30px rgba(255, 215, 0, 0.4);
+  transform: translateX(-6px) translateY(-50%);
+  animation: finish-line-pulse 2s ease-in-out infinite;
 }
 
 .finish-line::before {
@@ -175,8 +178,7 @@ onMounted(() => {
 
   .finish-line {
     /* left is set dynamically via :style */
-    top: var(--space-md);
-    bottom: var(--space-md);
+    height: calc(100% - var(--space-md) * 2);
   }
 }
 
@@ -205,8 +207,7 @@ onMounted(() => {
   }
 
   .finish-line {
-    top: var(--space-sm);
-    bottom: var(--space-sm);
+    height: calc(100% - var(--space-sm) * 2);
     width: 10px;
   }
 
@@ -233,8 +234,7 @@ onMounted(() => {
   }
 
   .finish-line {
-    top: 6px;
-    bottom: 6px;
+    height: calc(100% - 12px);
   }
 
   .finish-line::before {
