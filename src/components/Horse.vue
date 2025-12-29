@@ -37,13 +37,10 @@ const transform = computed(() => {
       <span class="label-text">{{ name }}</span>
     </div>
     <div class="lane-track">
-      <div
-        class="horse"
-        :style="{
-          backgroundColor: color,
-          transform: transform,
-        }"
-      ></div>
+      <div class="horse-container" :style="{ transform: transform }">
+        <div class="jockey-silks" :style="{ backgroundColor: color }"></div>
+        <div class="horse-emoji">🏇</div>
+      </div>
     </div>
   </div>
 </template>
@@ -82,7 +79,7 @@ const transform = computed(() => {
   border: 2px solid var(--color-border);
 }
 
-.horse {
+.horse-container {
   position: absolute;
   left: 0;
   top: 50%;
@@ -90,23 +87,41 @@ const transform = computed(() => {
   margin-top: -25px;
   width: 50px;
   height: 50px;
-  border-radius: 8px;
   will-change: transform;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25), 0 0 0 3px rgba(255, 255, 255, 0.3);
-  border: 2px solid rgba(0, 0, 0, 0.1);
-  transition: box-shadow 100ms ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.horse::after {
+.jockey-silks {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  opacity: 0.85;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25), 0 0 0 3px rgba(255, 255, 255, 0.3);
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  z-index: 1;
+}
+
+.horse-emoji {
+  position: relative;
+  font-size: 32px;
+  z-index: 2;
+  filter: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.3));
+}
+
+.horse-container::after {
   content: '';
   position: absolute;
   left: -15px;
   top: 0;
   width: 15px;
   height: 100%;
-  background: linear-gradient(to right, transparent, currentColor);
-  opacity: 0.15;
+  background: linear-gradient(to right, transparent, rgba(139, 92, 46, 0.3));
+  opacity: 0.5;
   border-radius: 4px 0 0 4px;
+  z-index: 0;
 }
 
 @media (max-width: 768px) {
@@ -122,10 +137,14 @@ const transform = computed(() => {
     height: 50px;
   }
 
-  .horse {
+  .horse-container {
     width: 40px;
     height: 40px;
     margin-top: -20px;
+  }
+
+  .horse-emoji {
+    font-size: 26px;
   }
 }
 
@@ -149,14 +168,21 @@ const transform = computed(() => {
     height: 40px;
   }
 
-  .horse {
+  .horse-container {
     width: 28px;
     height: 28px;
     margin-top: -14px;
+  }
+
+  .jockey-silks {
     border-radius: 6px;
   }
 
-  .horse::after {
+  .horse-emoji {
+    font-size: 18px;
+  }
+
+  .horse-container::after {
     left: -10px;
     width: 10px;
   }
@@ -176,14 +202,21 @@ const transform = computed(() => {
     height: 35px;
   }
 
-  .horse {
+  .horse-container {
     width: 24px;
     height: 24px;
     margin-top: -12px;
+  }
+
+  .jockey-silks {
     border-radius: 4px;
   }
 
-  .horse::after {
+  .horse-emoji {
+    font-size: 16px;
+  }
+
+  .horse-container::after {
     left: -8px;
     width: 8px;
   }
