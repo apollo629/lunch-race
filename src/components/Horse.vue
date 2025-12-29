@@ -33,7 +33,7 @@ const transform = computed(() => {
 
 <template>
   <div class="lane-container">
-    <div class="lane-label">
+    <div class="lane-label" :data-gate="lane + 1">
       <span class="label-text">{{ name }}</span>
     </div>
     <div class="lane-track">
@@ -57,26 +57,72 @@ const transform = computed(() => {
 .lane-label {
   width: 150px;
   flex-shrink: 0;
+  background: rgba(26, 71, 42, 0.8);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: 6px 0 0 6px;
+  border: 2px solid #d4af37;
+  border-right: none;
+  position: relative;
+}
+
+.lane-label::before {
+  content: attr(data-gate);
+  position: absolute;
+  left: -20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  background: #d4af37;
+  color: #000;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border: 2px solid #1a472a;
 }
 
 .label-text {
-  font-weight: 600;
-  color: var(--color-text);
+  font-weight: 700;
+  color: #f0e6d2;
   font-size: 0.875rem;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   display: block;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .lane-track {
   flex: 1;
   height: 60px;
-  background: linear-gradient(to right, #f3f4f6, #e5e7eb);
-  border-radius: 8px;
+  background: repeating-linear-gradient(
+      90deg,
+      #a67c52,
+      #a67c52 10px,
+      #8b6239 10px,
+      #8b6239 20px
+    ),
+    linear-gradient(to bottom, #8b6239, #a67c52);
+  border-radius: 4px;
   position: relative;
   overflow: visible;
-  border: 2px solid var(--color-border);
+  border: 2px solid #6b4423;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.lane-track::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.3);
 }
 
 .horse-container {

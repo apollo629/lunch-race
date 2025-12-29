@@ -107,10 +107,21 @@ onMounted(() => {
 .track-container {
   flex: 1;
   position: relative;
-  background: var(--color-surface);
+  background: linear-gradient(to bottom, #f0e6d2 0%, #e8dcc4 100%);
   border-radius: 16px;
   padding: var(--space-xl);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), inset 0 0 60px rgba(139, 92, 46, 0.1);
+}
+
+.track-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: repeating-linear-gradient(90deg, #d4af37, #d4af37 20px, #b8860b 20px, #b8860b 40px);
+  border-radius: 16px 16px 0 0;
 }
 
 .finish-line {
@@ -157,6 +168,29 @@ onMounted(() => {
   gap: var(--space-md);
   position: relative;
   z-index: 2;
+}
+
+.lanes::before {
+  content: 'START';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.4);
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  padding: 8px 4px;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.8),
+    rgba(255, 255, 255, 0.8) 10px,
+    rgba(0, 0, 0, 0.1) 10px,
+    rgba(0, 0, 0, 0.1) 20px
+  );
+  border-radius: 4px;
+  z-index: 5;
 }
 
 @media (max-width: 768px) {

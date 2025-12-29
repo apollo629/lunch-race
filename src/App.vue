@@ -28,10 +28,29 @@ const { currentState } = useAppState()
 }
 
 header {
-  background: linear-gradient(135deg, var(--color-primary) 0%, #6366f1 100%);
-  color: white;
+  background: linear-gradient(135deg, #1a472a 0%, #2d5f3f 50%, #1a472a 100%);
+  color: #f0e6d2;
   padding: var(--space-lg) var(--space-xl);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  border-bottom: 3px solid #d4af37;
+  position: relative;
+}
+
+header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: repeating-linear-gradient(
+    90deg,
+    #000 0px,
+    #000 15px,
+    #fff 15px,
+    #fff 30px
+  );
+  opacity: 0.3;
 }
 
 header h1 {
@@ -39,6 +58,8 @@ header h1 {
   font-weight: 700;
   margin: 0;
   text-align: center;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  letter-spacing: 1px;
 }
 
 main {
