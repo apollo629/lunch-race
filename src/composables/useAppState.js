@@ -11,6 +11,7 @@ const APP_STATES = {
 const currentState = ref(APP_STATES.SETUP)
 const winner = ref(null)
 const finalStandings = ref([])
+const raceTime = ref(30000) // Default 30 seconds in ms
 
 export function useAppState() {
   const { lunchSpots, addSpot, removeSpot, clearSpots } = useLunchSpots()
@@ -47,6 +48,7 @@ export function useAppState() {
     winner,
     finalStandings,
     lunchSpots,
+    raceTime,
     addSpot,
     removeSpot,
     canStartRace,

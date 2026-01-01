@@ -1,10 +1,10 @@
 <script setup>
-import RaceTrack from './RaceTrack.vue'
+import TreadmillRaceCanvas from './TreadmillRaceCanvas.vue'
 </script>
 
 <template>
   <div class="race-view">
-    <RaceTrack />
+    <TreadmillRaceCanvas />
   </div>
 </template>
 

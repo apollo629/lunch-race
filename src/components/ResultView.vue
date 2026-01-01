@@ -10,9 +10,10 @@ const getColorForSpot = (spotId) => {
   return HORSE_COLORS[index % HORSE_COLORS.length]
 }
 
-const formatRaceTime = (milliseconds) => {
-  const seconds = milliseconds / 1000
-  return `${seconds.toFixed(3)}s`
+const formatPosition = (position) => {
+  const suffixes = ['st', 'nd', 'rd']
+  const suffix = position <= 3 ? suffixes[position - 1] : 'th'
+  return `${position}${suffix} place`
 }
 </script>
 
@@ -45,8 +46,8 @@ const formatRaceTime = (milliseconds) => {
               :style="{ backgroundColor: getColorForSpot(spot.id) }"
             ></span>
             <span class="spot-name">{{ spot.name }}</span>
-            <span class="race-time">
-              {{ formatRaceTime(spot.finishTime) }}
+            <span class="race-position">
+              {{ formatPosition(spot.position) }}
             </span>
           </li>
         </ol>
@@ -177,7 +178,7 @@ const formatRaceTime = (milliseconds) => {
   white-space: nowrap;
 }
 
-.race-time {
+.race-position {
   font-weight: 600;
   color: var(--color-text-light);
   font-size: 0.875rem;
@@ -270,7 +271,7 @@ const formatRaceTime = (milliseconds) => {
     height: 20px;
   }
 
-  .race-time {
+  .race-position {
     font-size: 0.75rem;
   }
 

@@ -1,9 +1,18 @@
 <script setup>
+import { ref } from 'vue'
 import { useAppState } from '../composables/useAppState'
 import LunchSpotInput from './LunchSpotInput.vue'
 import { VALIDATION_RULES } from '../constants/raceConfig'
 
-const { lunchSpots, removeSpot, canStartRace, startRace } = useAppState()
+const { lunchSpots, raceTime, removeSpot, canStartRace, startRace } = useAppState()
+
+// Local race duration in seconds for the input
+const raceDuration = ref(30)
+
+// Update raceTime when duration changes
+const updateRaceTime = () => {
+  raceTime.value = raceDuration.value * 1000 // Convert to ms
+}
 </script>
 
 <template>
@@ -15,6 +24,20 @@ const { lunchSpots, removeSpot, canStartRace, startRace } = useAppState()
           Add at least {{ VALIDATION_RULES.MIN_SPOTS }} lunch spots to start the
           race!
         </p>
+      </div>
+
+      <div class="race-duration-input">
+        <label for="race-duration">Race Duration (seconds):</label>
+        <input
+          id="race-duration"
+          type="number"
+          v-model.number="raceDuration"
+          @change="updateRaceTime"
+          min="10"
+          max="120"
+          step="5"
+        />
+        <span class="duration-hint">{{ raceDuration }}s countdown</span>
       </div>
 
       <LunchSpotInput />
@@ -83,6 +106,42 @@ const { lunchSpots, removeSpot, canStartRace, startRace } = useAppState()
 .subtitle {
   color: var(--color-text-light);
   font-size: 1rem;
+}
+
+.race-duration-input {
+  margin: var(--space-lg) 0;
+  padding: var(--space-md);
+  background: var(--color-bg);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.race-duration-input label {
+  font-weight: 600;
+  color: var(--color-text);
+  flex-shrink: 0;
+}
+
+.race-duration-input input {
+  width: 100px;
+  padding: var(--space-sm);
+  border: 2px solid var(--color-border);
+  border-radius: 6px;
+  font-size: 1rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+.race-duration-input input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.duration-hint {
+  color: var(--color-text-light);
+  font-size: 0.875rem;
 }
 
 .lunch-spots-list {
