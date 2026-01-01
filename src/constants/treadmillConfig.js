@@ -36,24 +36,12 @@ export const BACKGROUND_LAYERS = [
   {
     id: 'stadium',
     zIndex: 1,
-    scrollSpeed: 0.4,
+    scrollSpeed: 0.5,
     imagePath: '/backgrounds/stadium.png',
   },
   {
-    id: 'bunting',
-    zIndex: 2,
-    scrollSpeed: 0.6,
-    imagePath: '/backgrounds/bunting.png',
-  },
-  {
-    id: 'fence',
-    zIndex: 3,
-    scrollSpeed: 0.8,
-    imagePath: '/backgrounds/fence.png',
-  },
-  {
     id: 'grass',
-    zIndex: 4,
+    zIndex: 2,
     scrollSpeed: 1.0,
     imagePath: '/backgrounds/grass.png',
   },

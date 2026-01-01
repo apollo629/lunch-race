@@ -12,7 +12,7 @@ import {
 import { calculateYPositions } from '../utils/treadmillPhysics'
 import { TREADMILL_CONFIG } from '../constants/treadmillConfig'
 
-const { lunchSpots, finishRace, raceTime } = useAppState()
+const { lunchSpots, finishRace, raceTime, resetRace } = useAppState()
 
 const canvasRef = ref(null)
 const ctx = ref(null)
@@ -91,6 +91,14 @@ function startAnimationLoop() {
   let lastTimestamp = 0
 
   function loop(timestamp) {
+    // Guard against unmounted component or stopped race
+    const canvas = canvasRef.value
+    const context = ctx.value
+
+    if (!canvas || !context || !isRunning.value) {
+      return  // Exit early if canvas disposed or race stopped
+    }
+
     const deltaTime = lastTimestamp ? timestamp - lastTimestamp : 0
     lastTimestamp = timestamp
 
@@ -106,7 +114,7 @@ function startAnimationLoop() {
       !finishLine.value
     ) {
       finishLine.value = {
-        x: canvasRef.value.width + 200,
+        x: canvas.width + 200,
         width: TREADMILL_CONFIG.FINISH_LINE_WIDTH,
         spawned: true,
       }
@@ -118,19 +126,18 @@ function startAnimationLoop() {
       finishLine.value.x -= TREADMILL_CONFIG.BASE_SCROLL_SPEED * (deltaTime / 1000)
     }
 
-    // Render
-    const canvas = canvasRef.value
-    ctx.value.clearRect(0, 0, canvas.width, canvas.height)
+    // Render with null-safe refs
+    context.clearRect(0, 0, canvas.width, canvas.height)
 
     drawBackgroundLayers(
-      ctx.value,
+      context,
       scrollOffset.value,
       canvas.width,
       canvas.height
     )
-    horses.value.forEach((horse) => drawHorse(ctx.value, horse))
-    drawFinishLine(ctx.value, finishLine.value, canvas.height)
-    drawTimer(ctx.value, formattedTime.value, canvas.width)
+    horses.value.forEach((horse) => drawHorse(context, horse))
+    drawFinishLine(context, finishLine.value, canvas.height)
+    drawTimer(context, formattedTime.value, canvas.width)
 
     if (isRunning.value) {
       animationFrameId.value = requestAnimationFrame(loop)
@@ -141,11 +148,17 @@ function startAnimationLoop() {
 }
 
 function handleReset() {
+  // Stop animation properly
   if (animationFrameId.value) {
     cancelAnimationFrame(animationFrameId.value)
+    animationFrameId.value = null
   }
-  // Emit reset event to parent
-  window.location.reload() // Simple reset for now
+
+  // Stop race engine
+  isRunning.value = false
+
+  // Return to setup view, preserving lunch spots
+  resetRace()
 }
 </script>
 

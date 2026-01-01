@@ -1,58 +1,60 @@
 import { TREADMILL_CONFIG } from '../constants/treadmillConfig'
 
-export function updateHorsePosition(horse, deltaTime) {
+export function updateHorsePosition(horse, deltaTime, allHorses) {
   const dt = deltaTime / 1000 // Convert to seconds
 
-  // Initialize each horse with unique racing characteristics
+  // Initialize horse with racing characteristics
   if (!horse.targetSpeed) {
-    // Each horse has a unique base speed - LOWER speeds so they don't fly off screen
-    horse.minSpeed = -10 + Math.random() * 30 // -10 to 20 px/s (can move backward/forward)
-    horse.maxSpeed = 30 + Math.random() * 40 // 30-70 px/s
-    horse.targetSpeed = horse.minSpeed + Math.random() * (horse.maxSpeed - horse.minSpeed)
+    // Wide speed range for dramatic racing
+    horse.minSpeed = 20   // Can slow down to 20 px/s
+    horse.maxSpeed = 120  // Can speed up to 120 px/s
+    horse.targetSpeed = 60 + Math.random() * 30  // Initial target: 60-90 px/s
     horse.currentSpeed = horse.targetSpeed
-    horse.speedChangeRate = 0.15 + Math.random() * 0.25 // How quickly they accelerate/decelerate
-    horse.randomness = 20 + Math.random() * 30 // Amount of random jitter
+    horse.distanceTraveled = 0
+
+    // Acceleration characteristics (unique per horse)
+    horse.acceleration = 15 + Math.random() * 25  // How fast they speed up/slow down
   }
 
-  // Randomly change target speed - each horse independently
-  if (Math.random() < 0.03) { // 3% chance per frame (~2x per second at 60fps)
+  // Randomly change target speed frequently for exciting racing
+  // Higher chance = more speed changes = more overtaking
+  if (Math.random() < 0.05) {  // 5% chance per frame (~3x per second at 60fps)
+    // Dramatic speed changes - can go from very slow to very fast!
     horse.targetSpeed = horse.minSpeed + Math.random() * (horse.maxSpeed - horse.minSpeed)
   }
 
-  // Smoothly move current speed toward target speed
+  // Smooth acceleration/deceleration toward target speed
+  // This creates natural momentum - horses don't instantly change speed
   const speedDiff = horse.targetSpeed - horse.currentSpeed
-  horse.currentSpeed += speedDiff * horse.speedChangeRate
+  horse.currentSpeed += speedDiff * (horse.acceleration * dt)
 
-  // Add random jitter each frame (different amount for each horse)
-  const jitter = (Math.random() - 0.5) * horse.randomness
+  // Clamp to min/max to prevent extreme values
+  horse.currentSpeed = Math.max(horse.minSpeed, Math.min(horse.maxSpeed, horse.currentSpeed))
 
-  // Set velocity directly
-  horse.velocity = horse.currentSpeed + jitter
+  // Add small random jitter for natural movement
+  const jitter = (Math.random() - 0.5) * 10
+  const actualSpeed = horse.currentSpeed + jitter
 
-  // Update position
-  horse.x += horse.velocity * dt
+  // Update distance traveled (this determines the winner!)
+  horse.distanceTraveled += actualSpeed * dt
 
-  // Gentle boundaries - keep horses on screen without forcing convergence
-  const centerX = TREADMILL_CONFIG.HORSE_CENTER_X
-  const maxDeviation = 300 // Horses can spread ±300px from center
+  // Visual X position: All horses start at same position and spread out over time
+  const startX = 250  // All horses start here (left side of screen)
+  const scale = 0.35   // Scale factor: distance traveled -> screen movement
 
-  if (horse.x < centerX - maxDeviation) {
-    // Too far left - gently push back without forcing same target speed
-    const pushBack = (centerX - maxDeviation - horse.x) * 0.5
-    horse.x += pushBack
-    // Encourage forward movement but keep randomness
-    if (horse.targetSpeed < 10) {
-      horse.targetSpeed = 10 + Math.random() * 30
-    }
-  } else if (horse.x > centerX + maxDeviation) {
-    // Too far right - gently push back
-    const pushBack = (horse.x - (centerX + maxDeviation)) * 0.5
-    horse.x -= pushBack
-    // Encourage backward/slower movement but keep randomness
-    if (horse.targetSpeed > 20) {
-      horse.targetSpeed = -5 + Math.random() * 25
-    }
+  // Map distance directly to screen position
+  horse.x = startX + (horse.distanceTraveled * scale)
+
+  // Soft boundary to prevent going off-screen
+  if (horse.x > 1400) {
+    horse.x = 1400  // Right edge
   }
+  if (horse.x < 100) {
+    horse.x = 100  // Left edge (in case someone goes backward)
+  }
+
+  // Store velocity for display/debug
+  horse.velocity = actualSpeed
 }
 
 export function calculateYPositions(numHorses, canvasHeight) {

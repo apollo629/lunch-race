@@ -53,8 +53,9 @@ export function useCountdownRaceEngine(lunchSpots, onRaceComplete) {
     remainingTime.value = Math.max(0, raceTime.value - elapsed)
 
     // Update horse positions and animations
+    // Pass all horses to updateHorsePosition for relative positioning
     horses.value.forEach((horse) => {
-      updateHorsePosition(horse, deltaTime)
+      updateHorsePosition(horse, deltaTime, horses.value)
       updateSpriteFrame(horse, deltaTime)
     })
 
@@ -78,15 +79,19 @@ export function useCountdownRaceEngine(lunchSpots, onRaceComplete) {
   }
 
   function determineWinner() {
-    // Sort horses by X position (furthest right wins)
-    const sorted = [...horses.value].sort((a, b) => b.x - a.x)
+    // Sort horses by distance traveled (furthest wins)
+    const sorted = [...horses.value].sort((a, b) =>
+      (b.distanceTraveled || 0) - (a.distanceTraveled || 0)
+    )
 
     const winner = sorted[0]
     const standings = sorted.map((horse, i) => ({
       ...horse,
       position: i + 1,
-      finalX: horse.x,
+      finalDistance: Math.round(horse.distanceTraveled || 0),
     }))
+
+    console.log('Race complete! Winner:', winner.name, 'Distance:', winner.distanceTraveled)
 
     onRaceComplete(winner, standings)
   }

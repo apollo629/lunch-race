@@ -14,14 +14,18 @@ export function drawBackgroundLayers(
       // Draw image-based background with parallax scrolling
       const layerOffset = scrollOffset * layer.scrollSpeed
       const imageWidth = image.width
-      const x1 = -(layerOffset % imageWidth)
-      const x2 = x1 + imageWidth
-
       const layerHeight = canvasHeight * 0.6
       const y = canvasHeight - layerHeight
 
-      ctx.drawImage(image, x1, y, imageWidth, layerHeight)
-      ctx.drawImage(image, x2, y, imageWidth, layerHeight)
+      // Calculate how many tiles needed to cover entire canvas width
+      const startX = -(layerOffset % imageWidth)
+      const tilesNeeded = Math.ceil((canvasWidth - startX) / imageWidth) + 1
+
+      // Draw tiles across entire canvas width to prevent gaps
+      for (let i = 0; i < tilesNeeded; i++) {
+        const x = startX + (i * imageWidth)
+        ctx.drawImage(image, x, y, imageWidth, layerHeight)
+      }
     } else {
       // Fallback: draw simple colored layers
       drawFallbackLayer(ctx, layer, scrollOffset, canvasWidth, canvasHeight)
@@ -54,6 +58,8 @@ function drawFallbackLayer(ctx, layer, scrollOffset, canvasWidth, canvasHeight) 
 }
 
 export function drawHorse(ctx, horse) {
+  if (!ctx || !horse) return
+
   const spriteSheet = getImage('horse-gallop')
   const size = TREADMILL_CONFIG.HORSE_SPRITE_SIZE
 
@@ -97,7 +103,7 @@ export function drawHorse(ctx, horse) {
 }
 
 export function drawFinishLine(ctx, finishLine, canvasHeight) {
-  if (!finishLine || !finishLine.spawned) return
+  if (!ctx || !finishLine || !finishLine.spawned) return
 
   const squareSize = TREADMILL_CONFIG.FINISH_LINE_SQUARE_SIZE
   const rows = Math.ceil(canvasHeight / squareSize)
@@ -118,6 +124,8 @@ export function drawFinishLine(ctx, finishLine, canvasHeight) {
 }
 
 export function drawTimer(ctx, formattedTime, canvasWidth) {
+  if (!ctx || !formattedTime) return
+
   // Timer background
   ctx.fillStyle = 'rgba(0, 0, 0, 0.7)'
   ctx.fillRect(canvasWidth / 2 - 120, 20, 240, 80)
