@@ -58,14 +58,14 @@ export function updateHorsePosition(horse, deltaTime, allHorses) {
 }
 
 export function calculateYPositions(numHorses, canvasHeight) {
-  const center = canvasHeight / 2
-  const groupHeight = 350 // Total height of horse group (wider spread)
+  const padding = 80 // Top/bottom padding
+  const availableHeight = canvasHeight - padding * 2
+  const laneHeight = availableHeight / numHorses
 
-  // More natural clustering - horses aren't in perfect rows
-  return Array.from({ length: numHorses }, () => {
-    // Random position within the group height
-    const randomY = center + (Math.random() - 0.5) * groupHeight
-    return randomY
+  // Evenly distribute horses in lanes
+  return Array.from({ length: numHorses }, (_, i) => {
+    // Center each horse in its lane
+    return padding + laneHeight * i + laneHeight / 2
   })
 }
 

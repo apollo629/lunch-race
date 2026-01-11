@@ -27,17 +27,19 @@ const updateRaceTime = () => {
       </div>
 
       <div class="race-duration-input">
-        <label for="race-duration">Race Duration (seconds):</label>
-        <input
-          id="race-duration"
-          type="number"
-          v-model.number="raceDuration"
-          @change="updateRaceTime"
-          min="10"
-          max="120"
-          step="5"
-        />
-        <span class="duration-hint">{{ raceDuration }}s countdown</span>
+        <label for="race-duration">Race Duration:</label>
+        <div class="slider-container">
+          <input
+            id="race-duration"
+            type="range"
+            v-model.number="raceDuration"
+            @input="updateRaceTime"
+            min="10"
+            max="120"
+            step="5"
+          />
+          <span class="duration-value">{{ raceDuration }}s</span>
+        </div>
       </div>
 
       <LunchSpotInput />
@@ -114,34 +116,78 @@ const updateRaceTime = () => {
   background: var(--color-bg);
   border-radius: 8px;
   display: flex;
-  align-items: center;
-  gap: var(--space-md);
+  flex-direction: column;
+  gap: var(--space-sm);
 }
 
 .race-duration-input label {
   font-weight: 600;
   color: var(--color-text);
-  flex-shrink: 0;
 }
 
-.race-duration-input input {
-  width: 100px;
-  padding: var(--space-sm);
-  border: 2px solid var(--color-border);
-  border-radius: 6px;
-  font-size: 1rem;
-  text-align: center;
-  font-weight: 600;
+.slider-container {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
 }
 
-.race-duration-input input:focus {
+.race-duration-input input[type="range"] {
+  flex: 1;
+  height: 8px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--color-border);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.race-duration-input input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  background: var(--color-primary);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.race-duration-input input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+}
+
+.race-duration-input input[type="range"]::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  background: var(--color-primary);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.race-duration-input input[type="range"]::-moz-range-thumb:hover {
+  transform: scale(1.1);
+}
+
+.race-duration-input input[type="range"]:focus {
   outline: none;
-  border-color: var(--color-primary);
 }
 
-.duration-hint {
-  color: var(--color-text-light);
-  font-size: 0.875rem;
+.race-duration-input input[type="range"]:focus::-webkit-slider-thumb {
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3);
+}
+
+.race-duration-input input[type="range"]:focus::-moz-range-thumb {
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3);
+}
+
+.duration-value {
+  font-weight: 700;
+  font-size: 1.125rem;
+  color: var(--color-primary);
+  min-width: 50px;
+  text-align: center;
 }
 
 .lunch-spots-list {
